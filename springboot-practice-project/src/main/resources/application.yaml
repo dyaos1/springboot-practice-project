@@ -1,26 +1,3 @@
-# springboot-practice-project
-
-
-
-## mysql 초기화 (데이터베이스생성 + 유저생성)
-show databases;
-
-create database board;
-
-create user 'tester'@'localhost' identified by 'asdf1234';
-
-select `user` from `mysql`.`user`;
-
-show grants for 'tester'@'localhost';
-
-grant all on `board`.* to 'tester'@'localhost' with grant option;
-
-flush privileges;
-
-
-
-## application.yaml
-
 debug: false
 
 logging:
@@ -28,6 +5,7 @@ logging:
     com.spp.springbootpractieproject: debug
     org.springframework.web.servlet: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace
+
 
 spring:
   datasource:
@@ -52,3 +30,12 @@ spring:
   config:
     activate:
       on-profile: testdb
+  datasource:
+    url: jdbc:jh2:mem:board;mode=mysql
+    driver-class-name: org.h2.Driver
+  sql.init.mode: always
+  test.database.replace: none # ???? ??? ??;;
+
+
+
+---

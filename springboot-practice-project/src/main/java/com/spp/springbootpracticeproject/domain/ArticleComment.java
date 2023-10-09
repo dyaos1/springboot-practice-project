@@ -1,6 +1,5 @@
 package com.spp.springbootpracticeproject.domain;
 
-import com.spp.springbootpracticeproject.config.JpaConfig;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,44 +8,30 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Set;
 
 
 @Getter
 @ToString
 @Table(indexes = {
-        @Index(columnList = "title"),
-        @Index(columnList = "hashtag"),
+        @Index(columnList = "content"),
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy"),
 })
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Article {
+public class ArticleComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
-    @Column(nullable = false)
-    private String title;
+    @ManyToOne(optional = false)
+    private Article article;
 
-    @Setter
-    @Column(nullable = false, length=10000)
+    @Setter @Column(nullable = false, length = 500)
     private String content;
-
-    @Setter
-    private String hashtag;
-
-    @OrderBy("id")
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
     // metadata
     @CreatedDate
@@ -65,24 +50,23 @@ public class Article {
     @Column(nullable = false, length=100)
     private String updatedBy;
 
-    protected Article() {
+    protected ArticleComment() {
     }
 
-    private Article(String title, String content, String hashtag) {
-        this.title = title;
+    private ArticleComment(Article article, String content) {
+        this.article = article;
         this.content = content;
-        this.hashtag = hashtag;
     }
 
-    public static Article of(String title, String content, String hashtag) {
-        return new Article(title, content, hashtag);
+    public static ArticleComment of(Article article, String content) {
+        return new ArticleComment(article, content);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Article article)) return false;
-        return id != null && id.equals(article.id);
+        if (!(o instanceof ArticleComment that)) return false;
+        return Objects.equals(id, that.id);
     }
 
     @Override
