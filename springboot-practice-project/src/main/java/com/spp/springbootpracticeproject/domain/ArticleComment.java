@@ -21,7 +21,7 @@ import java.util.Objects;
         @Index(columnList = "createdBy"),
 })
 @Entity
-public class ArticleComment {
+public class ArticleComment extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,21 +34,21 @@ public class ArticleComment {
     private String content;
 
     // metadata
-    @CreatedDate
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @CreatedBy
-    @Column(nullable = false, length=100)
-    private String createdBy;
-
-    @LastModifiedDate
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
-
-    @LastModifiedBy
-    @Column(nullable = false, length=100)
-    private String updatedBy;
+//    @CreatedDate
+//    @Column(nullable = false)
+//    private LocalDateTime createdAt;
+//
+//    @CreatedBy
+//    @Column(nullable = false, length=100)
+//    private String createdBy;
+//
+//    @LastModifiedDate
+//    @Column(nullable = false)
+//    private LocalDateTime updatedAt;
+//
+//    @LastModifiedBy
+//    @Column(nullable = false, length=100)
+//    private String updatedBy;
 
     protected ArticleComment() {
     }
