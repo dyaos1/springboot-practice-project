@@ -1,4 +1,4 @@
-package com.spp.springbootpracticeproject;
+package com.spp.springbootpracticeproject.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
